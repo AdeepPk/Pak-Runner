@@ -5,13 +5,24 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+      
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
-      - run: dotnet workload install maui android
-      - run: dotnet build PakRunner.csproj -c Release -f net8.0-android
-      - uses: actions/upload-artifact@v4
+          
+      - name: Install MAUI workloads
+        run: |
+          dotnet workload install maui
+          dotnet workload install android
+          
+      - name: Build APK
+        run: |
+          # Explicitly point to the AndroidManifest location
+          dotnet build PakRunner.csproj -c Release -f net8.0-android -p:AndroidManifest=Platforms/Android/AndroidManifest.xml
+          
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
         with:
-          name: app
-          path: bin/Release/net8.0-android/*.apk
+          name: pakrunner.apk
+          path: bin/Release/net8.0-android/*-Signed.apk
