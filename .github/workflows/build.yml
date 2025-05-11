@@ -18,7 +18,8 @@ jobs:
           
       - name: Build APK
         run: |
-          # Explicitly point to the AndroidManifest location
+          # Create required directories if they don't exist
+          mkdir -p Platforms/Android/Resources/{drawable,values,mipmap-anydpi-v26}
           dotnet build PakRunner.csproj -c Release -f net8.0-android -p:AndroidManifest=Platforms/Android/AndroidManifest.xml
           
       - name: Upload APK
