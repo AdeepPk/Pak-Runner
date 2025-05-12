@@ -16,11 +16,13 @@ jobs:
           dotnet workload install maui
           dotnet workload install android
           
+      - name: Prepare Android resources
+        run: |
+          mkdir -p Platforms/Android/Resources/{drawable,drawable-v31,values,mipmap-anydpi-v26,mipmap-anydpi-v31}
+          
       - name: Build APK
         run: |
-          # Create required directories if they don't exist
-          mkdir -p Platforms/Android/Resources/{drawable,values,mipmap-anydpi-v26}
-          dotnet build PakRunner.csproj -c Release -f net8.0-android -p:AndroidManifest=Platforms/Android/AndroidManifest.xml
+          dotnet build PakRunner.csproj -c Release -f net8.0-android -p:AndroidManifest=Platforms/Android/AndroidManifest.xml -p:AndroidPackageFormat=apk
           
       - name: Upload APK
         uses: actions/upload-artifact@v4
