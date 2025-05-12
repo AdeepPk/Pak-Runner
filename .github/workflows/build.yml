@@ -14,11 +14,12 @@ jobs:
       - name: Install workloads
         run: dotnet workload install maui android
              
-      - name: Prepare Resources
+      - name: Verify Resources
         run: |
-          mkdir Platforms/Android/Resources/drawable
-          mkdir Platforms/Android/Resources/values
-          mkdir Platforms/Android/Resources/mipmap-anydpi-v26
+          # Check if directories exist, create only if missing
+          if (!(Test-Path Platforms/Android/Resources/drawable)) { mkdir Platforms/Android/Resources/drawable }
+          if (!(Test-Path Platforms/Android/Resources/values)) { mkdir Platforms/Android/Resources/values }
+          if (!(Test-Path Platforms/Android/Resources/mipmap-anydpi-v26)) { mkdir Platforms/Android/Resources/mipmap-anydpi-v26 }
           
       - name: Build
         run: dotnet build PakRunner.csproj -c Release -f net8.0-android -p:AndroidManifest=Platforms/Android/AndroidManifest.xml -p:AndroidEnablePreBuildAot=true -p:AndroidSigningKeyPass=pass -p:AndroidSigningStorePass=pass -p:AndroidPackageFormat=apk
