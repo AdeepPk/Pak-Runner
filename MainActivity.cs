@@ -1,39 +1,41 @@
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
-using Android.Views;
 using Android.Widget;
+using Android.Views;
 
 namespace PakRunner;
 
 [Activity(
     MainLauncher = true,
-    ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation
+    ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
+    Theme = "@style/Maui.SplashTheme"
 )]
-public class MainActivity : Activity
+public class MainActivity : MauiAppCompatActivity
 {
     protected override void OnCreate(Bundle? savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
         
-        // Enable nullable context
-        #nullable enable
-        
-        // Create UI programmatically (temporary workaround)
+        // Programmatic UI as fallback
         var layout = new LinearLayout(this)
         {
-            Orientation = Orientation.Vertical
+            Orientation = Orientation.Vertical,
+            LayoutParameters = new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MatchParent,
+                ViewGroup.LayoutParams.MatchParent)
         };
 
         var player = new ImageView(this)
         {
-            Id = Resource.Id.playerSprite
+            LayoutParameters = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WrapContent,
+                ViewGroup.LayoutParams.WrapContent)
         };
         player.SetImageResource(Resource.Drawable.player_icon);
 
         var jumpButton = new Button(this)
         {
-            Id = Resource.Id.jumpButton,
             Text = "JUMP"
         };
 
