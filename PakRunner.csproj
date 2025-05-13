@@ -9,13 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Essential MAUI Packages -->
     <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.0" />
     <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Maui.Graphics" Version="8.0.0" />
+    
+    <!-- Android Specific -->
+    <PackageReference Include="Microsoft.Android.Sdk" Version="34.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <AndroidResource Include="Platforms\Android\Resources\values\ids.xml" />
-    <AndroidResource Include="Platforms\Android\Resources\drawable\player_icon.png" />
-    <AndroidResource Include="Platforms\Android\Resources\layout\game_layout.axml" />
+    <AndroidResource Include="Platforms\Android\Resources\**\*" />
   </ItemGroup>
 </Project>
