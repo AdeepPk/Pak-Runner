@@ -32,7 +32,7 @@ public class MainActivity : MauiAppCompatActivity
                 ViewGroup.LayoutParams.WrapContent,
                 ViewGroup.LayoutParams.WrapContent)
         };
-        player.SetImageResource(Resource.Drawable.player_icon);
+        player.SetImageResource(Android.Resource.Drawable.IcMenuAdd); // "+" icon
 
         var jumpButton = new Button(this)
         {
