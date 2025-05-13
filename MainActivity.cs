@@ -8,55 +8,37 @@ namespace PakRunner;
 
 [Activity(
     MainLauncher = true,
-    ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
-    ScreenOrientation = ScreenOrientation.Landscape
+    ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation
 )]
 public class MainActivity : Activity
 {
-    private Button jumpButton;
-    private ImageView player;
-    private bool isGrounded = true;
-    private float playerSpeed = 5f;
-
     protected override void OnCreate(Bundle? savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
         
-        // Set game view
-        SetContentView(Resource.Layout.game_layout);
+        // Enable nullable context
+        #nullable enable
         
-        // Initialize controls
-        jumpButton = FindViewById<Button>(Resource.Id.jumpButton);
-        player = FindViewById<ImageView>(Resource.Id.playerSprite);
-        
-        // Game loop
-        var timer = new System.Timers.Timer(16); // ~60fps
-        timer.Elapsed += (s, e) => RunOnUiThread(UpdateGame);
-        timer.Start();
-        
-        jumpButton.Click += (s, e) => Jump();
-    }
-
-    private void UpdateGame()
-    {
-        // Horizontal movement
-        player.TranslationX += playerSpeed;
-        
-        // TODO: Add obstacle spawning logic
-    }
-
-    private void Jump()
-    {
-        if (isGrounded)
+        // Create UI programmatically (temporary workaround)
+        var layout = new LinearLayout(this)
         {
-            player.Animate().TranslationYBy(-100f).SetDuration(300).Start();
-            isGrounded = false;
-            
-            // Return to ground
-            player.PostDelayed(() => {
-                player.Animate().TranslationYBy(100f).SetDuration(300).Start();
-                isGrounded = true;
-            }, 500);
-        }
+            Orientation = Orientation.Vertical
+        };
+
+        var player = new ImageView(this)
+        {
+            Id = Resource.Id.playerSprite
+        };
+        player.SetImageResource(Resource.Drawable.player_icon);
+
+        var jumpButton = new Button(this)
+        {
+            Id = Resource.Id.jumpButton,
+            Text = "JUMP"
+        };
+
+        layout.AddView(player);
+        layout.AddView(jumpButton);
+        SetContentView(layout);
     }
 }
