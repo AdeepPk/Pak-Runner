@@ -4,8 +4,6 @@ using Android.OS;
 using Android.Widget;
 using Android.Views;
 
-namespace PakRunner;
-
 [Activity(
     MainLauncher = true,
     ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
@@ -17,7 +15,7 @@ public class MainActivity : MauiAppCompatActivity
     {
         base.OnCreate(savedInstanceState);
         
-        // Programmatic UI as fallback
+        // Create basic UI programmatically
         var layout = new LinearLayout(this)
         {
             Orientation = Orientation.Vertical,
@@ -26,13 +24,8 @@ public class MainActivity : MauiAppCompatActivity
                 ViewGroup.LayoutParams.MatchParent)
         };
 
-        var player = new ImageView(this)
-        {
-            LayoutParameters = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WrapContent,
-                ViewGroup.LayoutParams.WrapContent)
-        };
-        player.SetImageResource(Android.Resource.Drawable.IcMenuAdd); // "+" icon
+        var player = new ImageView(this);
+        player.SetImageResource(Android.Resource.Drawable.IcMenuAdd); // Using system icon
 
         var jumpButton = new Button(this)
         {
