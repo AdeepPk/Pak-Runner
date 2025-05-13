@@ -1,8 +1,13 @@
 using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 
-class MauiProgram
+namespace PakRunner;
+
+public static class MauiProgram
 {
-    public static MauiApp CreateMauiApp() => 
-        MauiApp.CreateBuilder().UseMauiApp<App>().Build();
+    public static MauiApp CreateMauiApp()
+    {
+        var builder = MauiApp.CreateBuilder();
+        return builder.Build();
+    }
 }
